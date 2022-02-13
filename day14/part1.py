@@ -19,17 +19,17 @@ def step(polymer, rules):
 def main():
     # Load puzzle input
     polymer, rules = load_data()
-    
+
     # Apply 10 update steps
     for i in range(10):
         polymer = step(polymer, rules)
-    
+
     # Count occurences of each letter
     _, counts = np.unique(list(polymer), return_counts=True)
-    
+
     # Subtract most common count from least common count
     answer = np.ptp(counts)
-    
+
     # Print solution
     print(
         f"If you take the quantity of the most common element and subtract the quantity of the least common element you get {answer}."

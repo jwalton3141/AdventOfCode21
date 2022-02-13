@@ -5,7 +5,7 @@ import numpy as np
 from utils import load_data
 
 
-def main():    
+def main():
     timers = load_data()
 
     for day in range(80):

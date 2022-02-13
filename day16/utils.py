@@ -1,6 +1,8 @@
-class Transmission():
+from functools import reduce
 
-    def __init__(self, puzzle_input="d16_input.txt"):
+
+class Transmission:
+    def __init__(self, puzzle_input="input.txt"):
         self.coded_message = self._load_data(puzzle_input)
         self.decoded_message = []
         self.version_sum = 0
@@ -46,22 +48,24 @@ class Transmission():
         """
         # Literal packets always contain at least one group
         num_groups = 1
-    
+
         # Count the number of groups in the packet
         while packet[5 * num_groups + 1] != "0":
             num_groups += 1
-    
+
         # Extract groups from packet
         groups = [packet[5 * (i + 1) + 2 : 5 * (i + 2) + 1] for i in range(num_groups)]
-    
+
         # Get position of final character in packet
         end_id = 5 * (num_groups + 1) + 1
-    
+
         return groups, end_id
 
     def _decode_operator(self, packet):
         """Decode operator packet."""
         self.version_sum += self._get_packet_version(packet)
+        num_values = len(self.decoded_message)
+        type_id = self._get_type_id(packet)
 
         mode = int(packet[6])
         # mode = 1
@@ -76,10 +80,36 @@ class Transmission():
             subpackets_length = self._bin2int(packet[7:22])
             subpackets = packet[22 : 22 + subpackets_length]
             # Get remaining packets
-            packet = packet[22 + subpackets_length:]
+            packet = packet[22 + subpackets_length :]
 
         self.decode(transmission=subpackets)
+
+        updated_num_values = len(self.decoded_message)
+        num_new_values = updated_num_values - num_values
+        self._apply_operator(num_new_values, type_id)
         return packet
+
+    def _apply_operator(self, num_new_values, type_id):
+        """Apply operator rule."""
+        print(self.decoded_message, num_new_values)
+        operate_on = self.decoded_message[-num_new_values:]
+
+        if type_id == 0:
+            result = sum(operate_on)
+        elif type_id == 1:
+            result = reduce(lambda x, y: x * y, operate_on, 1)
+        elif type_id == 2:
+            result = min(operate_on)
+        elif type_id == 3:
+            result = max(operate_on)
+        elif type_id == 5:
+            result = 1 if operate_on[0] > operate_on[1] else 0
+        elif type_id == 6:
+            result = 1 if operate_on[0] < operate_on[1] else 0
+        else:
+            result = int(operate_on[0] == operate_on[1])
+
+        self.decoded_message = self.decoded_message[:-num_new_values] + [result]
 
     def _get_packet_version(self, packet):
         """Get version from packet's header."""
@@ -88,6 +118,10 @@ class Transmission():
     def _is_literal(self, packet):
         """Return True if packet is of literal type."""
         return packet[3:6] == "100"
+
+    def _get_type_id(self, packet):
+        """Get type ID of packet."""
+        return self._bin2int(packet[3:6])
 
     def _hex2bin(self, hex_str):
         """
@@ -102,4 +136,3 @@ class Transmission():
         integer.
         """
         return int(bin_str, 2)
-

@@ -6,13 +6,13 @@ from utils import load_data
 def main():
     # Read input data
     instructions = load_data()
-    
+
     # Pivot by direction
     direction = instructions.pivot(columns="direction", values="distance").fillna(0)
-    
+
     # Compute the aim at each step
     direction["aim"] = (direction["down"] - direction["up"]).cumsum()
-    
+
     # Horizontal displacment
     h = direction["forward"].sum()
     # Vertical displacement
