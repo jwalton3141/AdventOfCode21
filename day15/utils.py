@@ -13,7 +13,9 @@ def load_data():
 def get_lowest_risk(risk):
     """Get the lowest risk of any path from the top left to the bottom right."""
     # Create lattice graph
-    G = nx.grid_2d_graph(risk.shape[0], risk.shape[1], create_using=nx.MultiDiGraph)
+    G = nx.grid_2d_graph(  # noqa: N806
+        risk.shape[0], risk.shape[1], create_using=nx.MultiDiGraph
+    )
 
     # Add weights to edges
     for u, v, key in G.edges:
