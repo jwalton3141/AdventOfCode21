@@ -13,7 +13,8 @@ def main():
     num_paths = len(paths)
     # Print solution
     print(
-        f"There are {num_paths} paths through this cave system that visit small caves at most once."
+        f"There are {num_paths} paths through this cave system that visit small "
+        "caves at most once."
     )
     return num_paths
 

@@ -54,7 +54,8 @@ def main():
     answer = int(np.ptp(char_counts) / 2)
 
     print(
-        f"If you take the quantity of the most common element and subtract the quantity of the least common element you get {answer}."
+        "If you take the quantity of the most common element and subtract the "
+        f"quantity of the least common element you get {answer}."
     )
     return answer
 

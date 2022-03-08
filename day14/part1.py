@@ -32,7 +32,8 @@ def main():
 
     # Print solution
     print(
-        f"If you take the quantity of the most common element and subtract the quantity of the least common element you get {answer}."
+        "If you take the quantity of the most common element and subtract the "
+        f"quantity of the least common element you get {answer}."
     )
     return answer
 
