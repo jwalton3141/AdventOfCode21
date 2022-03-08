@@ -1,7 +1,5 @@
 #! /usr/bin/env python3
 
-import networkx as nx
-
 from utils import load_data, get_lowest_risk
 
 
