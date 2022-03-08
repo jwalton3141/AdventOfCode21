@@ -8,10 +8,7 @@ $(VIRTUALENV_NAME): requirements.txt
 	pip install -r requirements.txt
 
 test:
-	for day in $$(find -type f -name test_solutions.py -exec dirname {} + | sort); do \
-		echo \\nTesting $$(basename $$day)...; \
-		cd $$day && pytest && cd ..; \
-	done
+	./scripts/pytest.sh
 
 clean:
 	rm -rf $(VIRTUALENV_NAME)
