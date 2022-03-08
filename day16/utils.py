@@ -71,7 +71,7 @@ class Transmission:
         # mode = 1
         if mode:
             # Decode the next 11 characters
-            number_subpackets = self._bin2int(packet[7:18])
+            # number_subpackets = self._bin2int(packet[7:18])
             subpackets = packet[18:]
             packet = ""
         # mode = 0
