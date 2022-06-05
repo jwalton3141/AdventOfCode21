@@ -8,10 +8,10 @@ def main():
     instructions = load_data()
 
     # Compute total distance travelled in each direction
-    summed = instructions.groupby("direction").sum()
+    summed = instructions.groupby("direction").sum().T
 
     # Compute product of horizontal and vertical movement
-    hv_product = (summed.loc["forward"] * (summed.loc["down"] - summed.loc["up"]))[0]
+    hv_product = (summed["forward"] * (summed["down"] - summed["up"]))[0]
 
     # Print solution
     print(f"The product of the horizonal and vertical displacement is: {hv_product}.")

@@ -8,7 +8,9 @@ def main():
     instructions = load_data()
 
     # Pivot by direction
-    direction = instructions.pivot(columns="direction", values="distance").fillna(0)
+    direction = (
+        instructions.pivot(columns="direction", values="distance").fillna(0).astype(int)
+    )
 
     # Compute the aim at each step
     direction["aim"] = (direction["down"] - direction["up"]).cumsum()
@@ -17,7 +19,7 @@ def main():
     h = direction["forward"].sum()
     # Vertical displacement
     v = (direction["aim"] * direction["forward"]).sum()
-    product = int(h * v)
+    product = h * v
 
     # Print solution
     print(f"The product of the horizonal and vertical displacement is: {product}.")
