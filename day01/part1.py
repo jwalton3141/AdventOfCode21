@@ -8,7 +8,7 @@ def main():
     depths = load_data()
 
     # Count the number of times the depth increases
-    step_downs = (depths.diff() > 0).sum()[0]
+    step_downs = (depths.diff() > 0)[0].sum()
 
     # Print solution
     print(f"The depth measurement increases {step_downs} times.")
